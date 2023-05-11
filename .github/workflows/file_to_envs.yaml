@@ -1,0 +1,25 @@
+name: Test envs
+
+on:
+  push
+
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+     - name: Import SOPS AGE KEY
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          encodedString: ${{ secrets.SOPS_AGE_FILE }}
+          fileName: "agefile"
+          fileDir: "/tmp" 
+  
+      - name: File to envs
+        run: |
+          source ${{ secrets.ENVS_CONTENT }} && export $(sed '/^#/d' ${{ secret.ENVS_CONTENT }} | cut -d= -f1)
+      
+      - run: echo "$GITHUB_CONTEXT"
