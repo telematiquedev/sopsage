@@ -16,6 +16,8 @@ jobs:
           SECRETS_VARS: ${{ toJson(secrets.ENVS_CONTENT) }}
         run: |
           echo -e "$SECRETS_VARS" > "secrets.txt"
+          sed 's/\"//g' secrets.txt > unquoted_secrets.txt
+          source unquoted_secrets.txt && export $(sed '/^#/d' unquoted_secrets.txt | cut -d= -f1)
 
       - uses: actions/setup-python@v4
         with:
