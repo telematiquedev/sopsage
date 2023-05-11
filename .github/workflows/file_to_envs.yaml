@@ -17,7 +17,8 @@ jobs:
         run: echo "$SECRETS_VARS" > "secrets.txt"
       
       - name: File to envs
-        run: source secrets.txt && export $(sed '/^#/d' secrets.txt | cut -d= -f1)
+        run: |
+          source secrets.txt && export $(sed '/^#/d' secrets.txt | cut -d= -f1)
 
       - name: Upload Artifact      
         uses: actions/upload-artifact@v3
