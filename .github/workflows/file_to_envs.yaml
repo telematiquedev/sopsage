@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: '3.10'
         
-      - run: python -c "import os; print(os.getenv('API_URL')); print(os.getenv('USERNAME'))"
+      - run: python -c "import os; print(os.environ.items()); print(os.getenv('API_URL')); print(os.getenv('USERNAME'))"
 
       - name: Upload Artifact      
         uses: actions/upload-artifact@v3
