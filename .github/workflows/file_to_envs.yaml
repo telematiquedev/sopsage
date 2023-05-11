@@ -15,8 +15,7 @@ jobs:
         env:
           SECRETS_VARS: ${{ toJson(secrets.ENVS_CONTENT) }}
         run: |
-          echo "$SECRETS_VARS" > "secrets.txt"
-          export $(xargs < secrets.txt)
+          echo -e "$SECRETS_VARS" > "secrets.txt"
 
       - uses: actions/setup-python@v4
         with:
