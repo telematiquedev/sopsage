@@ -1,0 +1,33 @@
+name: Test envs
+
+on:
+  push
+
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    env:
+      SOPS_AGE_KEY_FILE: /tmp/agefile
+  
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Import SOPS AGE KEY
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          encodedString: ${{ secrets.SOPS_AGE_FILE }}
+          fileName: "agefile"
+          fileDir: "/tmp"
+      
+      - name: Sops Binary Installer
+        uses: mdgreenwald/mozilla-sops-action@v1.4.1
+
+      - name: Read encrypted .env file
+        run: cat .env
+      
+      - name: Decrypt .env file
+        run: sops -d -i .env
+      
+      - name: Read decrypted .env file
+        run: cat .env
