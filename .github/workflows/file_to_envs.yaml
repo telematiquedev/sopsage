@@ -16,9 +16,9 @@ jobs:
           SECRETS_VARS: ${{ toJson(secrets.ENVS_CONTENT) }}
         run: echo "$SECRETS_VARS" > "secrets.txt"
       
-      # - name: File to envs
-      #   run: |
-      #     source secrets.txt && export $(sed '/^#/d' secrets.txt | cut -d= -f1)
+      - name: File to envs
+        run: |
+          export $(xargs < secrets.txt)
 
       - name: Upload Artifact      
         uses: actions/upload-artifact@v3
