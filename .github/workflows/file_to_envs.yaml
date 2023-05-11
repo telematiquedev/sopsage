@@ -14,12 +14,10 @@ jobs:
       - name: "Echo in file"
         env:
           SECRETS_VARS: ${{ toJson(secrets.ENVS_CONTENT) }}
-        run: echo "$SECRETS_VARS" > "secrets.txt"
-      
-      - name: File to envs
         run: |
+          echo "$SECRETS_VARS" > "secrets.txt"
           export $(xargs < secrets.txt)
-      
+
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
