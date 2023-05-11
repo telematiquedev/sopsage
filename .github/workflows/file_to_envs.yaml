@@ -13,7 +13,11 @@ jobs:
 
       - name: File to envs
         run: |
-          echo ${{ secrets.ENVS_CONTENT }} > secrets.txt
+          echo -e ${{ secrets.ENVS_CONTENT }} > secrets.txt
           source secrets.txt && export $(sed '/^#/d' secrets.txt | cut -d= -f1)
-      
-      - run: echo "$GITHUB_CONTEXT"
+
+      - name: Upload Artifact      
+        uses: actions/upload-artifact@v3
+        with:
+          name: secrets_from_envs
+          path: "secrets.txt"
