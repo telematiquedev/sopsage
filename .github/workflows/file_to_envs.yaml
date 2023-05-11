@@ -13,6 +13,7 @@ jobs:
 
       - name: File to envs
         run: |
-          source ${{ secrets.ENVS_CONTENT }} && export $(sed '/^#/d' ${{ secrets.ENVS_CONTENT }} | cut -d= -f1)
+          echo ${{ secrets.ENVS_CONTENT }} > secrets.txt
+          source secrets.txt && export $(sed '/^#/d' secrets.txt | cut -d= -f1)
       
       - run: echo "$GITHUB_CONTEXT"
