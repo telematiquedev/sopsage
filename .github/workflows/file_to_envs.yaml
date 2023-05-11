@@ -19,6 +19,12 @@ jobs:
       - name: File to envs
         run: |
           export $(xargs < secrets.txt)
+      
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+        
+      - run: python -c "import os; os.getenv('API_URL'); os.getenv('USERNAME')"
 
       - name: Upload Artifact      
         uses: actions/upload-artifact@v3
